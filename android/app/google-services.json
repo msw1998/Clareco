@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "93808411370",
+    "project_id": "clareco-1f119",
+    "storage_bucket": "clareco-1f119.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93808411370:android:eacab65407279ad6248d93",
+        "android_client_info": {
+          "package_name": "com.clareco.clareco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93808411370-7fv28tf94jfsploqg35cd9a8kplqpo06.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.clareco.clareco",
+            "certificate_hash": "2546a450f76fbb93b9884ece07ed4a0d4c9c3d72"
+          }
+        },
+        {
+          "client_id": "93808411370-ijcqhjf17aqk1cuq4qc6s420dqd32td1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrqYVPE09DLmk5efLyMqIxZwE9Fco7lAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93808411370-ijcqhjf17aqk1cuq4qc6s420dqd32td1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "93808411370-6sf22b7ls2eiqepqlklhrc76f1liqshf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.clareco.clareco"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93808411370:android:cc7b1cc9ff59b4ab248d93",
+        "android_client_info": {
+          "package_name": "com.example.clareco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93808411370-8bdgr4vdn6ls1nlv8htl7uibsm9pnoot.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.clareco",
+            "certificate_hash": "2546a450f76fbb93b9884ece07ed4a0d4c9c3d72"
+          }
+        },
+        {
+          "client_id": "93808411370-ijcqhjf17aqk1cuq4qc6s420dqd32td1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrqYVPE09DLmk5efLyMqIxZwE9Fco7lAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93808411370-ijcqhjf17aqk1cuq4qc6s420dqd32td1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "93808411370-6sf22b7ls2eiqepqlklhrc76f1liqshf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.clareco.clareco"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
