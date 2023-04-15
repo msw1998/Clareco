@@ -25,7 +25,7 @@ class _DialPadState extends State<DialPad> {
 // "heyobeentje11@hotmail.com",
     final message = Message()
       ..from = Address(email, "Clareco")
-      ..recipients = ["msw7798@gmail.com", "sadiqr240@gmail.com"]
+      ..recipients = ["heyobeentje11@hotmail.com"]
       ..subject = "User Name: $title : Here is the phone number"
       ..text =
           "User Email Address is: ${user.email} \n The Phone Number is $number";

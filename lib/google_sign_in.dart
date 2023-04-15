@@ -35,7 +35,9 @@ class GoogleSignInProvider extends ChangeNotifier {
         return user;
       }
     } catch (e) {
+      print('...............................');
       print(e.toString());
+      print('...............................');
     }
   }
 

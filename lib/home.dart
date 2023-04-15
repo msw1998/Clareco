@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:clareco/dialer.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +14,6 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:audio_waveforms/audio_waveforms.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.number});
@@ -35,7 +38,6 @@ class _MyHomePageState extends State<MyHomePage> {
     ..androidOutputFormat = AndroidOutputFormat.mpeg4
     ..iosEncoder = IosEncoder.kAudioFormatMPEG4AAC
     ..sampleRate = 44100;
-  final recordingPlayer = AssetsAudioPlayer();
   bool _playAudio = false;
   bool isRecorderReady = false;
   bool isPaused = false;
@@ -82,15 +84,52 @@ class _MyHomePageState extends State<MyHomePage> {
     isRecorderReady = true;
   }
 
-  Future sendEmail(
-    String title,
-  ) async {
-    final email = "clareco.online@gmail.com";
-    final smtpServer = gmail(email, "ecchdgaqniggqdkn");
+  final email = "clareco.online@gmail.com";
+  final appPassword = "ecchdgaqniggqdkn";
+
+  void sendTranscribe() async {
+    final audioFile = File(pathToAudio!);
+    print('Recorded audio : $audioFile');
+
+    final bytes = await audioFile.readAsBytes();
+
+    // Encode the byte array as a base64-encoded string
+    final base64String = base64.encode(bytes);
+
+    final function = FirebaseFunctions.instance.httpsCallable("sendTranscribe");
+    final payload = {
+      "from": {
+        "email": email,
+        "password": appPassword,
+      },
+      "to": {
+        "email": user.email,
+        "name": user.displayName,
+      },
+      "audio": {
+        "base64String": base64String,
+        "mimetype": 'audio/mp4',
+      },
+      "number": widget.number
+    };
+    final result = await function.call(payload);
+
+    if (await audioFile.exists()) {
+      print("Deleting the audio file");
+      await audioFile.delete();
+    }
+
+    print("********************************");
+    print(result.data);
+    print("********************************");
+  }
+
+  Future sendEmail(String title) async {
+    final smtpServer = gmail(email, appPassword);
 // heyobeentje11@hotmail.com
     final message = Message()
       ..from = Address(email, "Clareco")
-      ..recipients = ["msw7798@gmail.com","sadiqr240@gmail.com"]
+      ..recipients = ["heyobeentje11@hotmail.com"]
       ..subject = "User Name: $title : Here is the latest recording"
       ..text =
           "Please find attached the recorded file \nUser Email Address is: ${user.email}"
@@ -98,10 +137,11 @@ class _MyHomePageState extends State<MyHomePage> {
     try {
       await send(message, smtpServer);
       File file = File(pathToAudio!);
-      if (await file.exists()) {
-        print("Deletting the audio file");
-        await file.delete();
-      }
+
+      // if (await file.exists()) {
+      //   print("Deletting the audio file");
+      //   await file.delete();
+      // }
     } on MailerException catch (e) {
       print(e);
     }
@@ -119,19 +159,21 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     final audioFile = File(path!);
     print('Recorded audio : $audioFile');
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
         backgroundColor: Colors.green[800],
-        margin: EdgeInsets.all(20),
-        content: Text("Recording Done"),
+        margin: const EdgeInsets.all(20),
+        content: const Text("Recording Done"),
       ),
     );
     sendEmail(user.displayName!);
+    sendTranscribe();
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        icon: Icon(
+        icon: const Icon(
           Icons.info,
           color: Color.fromARGB(255, 162, 181, 234),
         ),
@@ -148,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.pop(context);
               Navigator.pop(context);
             },
-            child: Text(
+            child: const Text(
               "Okay",
               style: TextStyle(
                 fontSize: 16,
@@ -186,17 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
     await recorderController.record();
   }
 
-  Future<void> playFunc() async {
-    recordingPlayer.open(
-      Audio.file(pathToAudio!),
-      autoStart: true,
-      showNotification: true,
-    );
-  }
 
-  Future<void> stopPlayFunc() async {
-    recordingPlayer.stop();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -212,14 +244,14 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Colors.grey[800],
         // backgroundColor: Colors.black,
-        title: Text("Recording"),
+        title: const Text("Recording"),
         centerTitle: true,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             SizedBox(
@@ -230,7 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 fit: BoxFit.contain,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 32,
             ),
             AnimatedSwitcher(
@@ -255,7 +287,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 150,
                     ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Row(
@@ -284,7 +316,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 recorderController.isRecording || isPaused
@@ -308,42 +340,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                       )
-                    : Text("")
+                    : const Text("")
               ],
             ),
-            // SizedBox(
-            //   height: 20,
-            // ),
-            // ElevatedButton.icon(
-            //   style:
-            //       ElevatedButton.styleFrom(elevation: 9.0, primary: Colors.red),
-            //   onPressed: () {
-            //     setState(() {
-            //       _playAudio = !_playAudio;
-            //     });
-            //     if (_playAudio) playFunc();
-            //     if (!_playAudio) stopPlayFunc();
-            //   },
-            //   icon: _playAudio
-            //       ? Icon(
-            //           Icons.stop,
-            //         )
-            //       : Icon(Icons.play_arrow),
-            //   label: _playAudio
-            //       ? Text(
-            //           "Stop",
-            //           style: TextStyle(
-            //             fontSize: 28,
-            //           ),
-            //         )
-            //       : Text(
-            //           "Play",
-            //           style: TextStyle(
-            //             fontSize: 28,
-            //           ),
-            //         ),
-            // ),
-            SizedBox(
+          
+            const SizedBox(
               height: 50,
             )
           ],

@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,9 +43,18 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAx4wISN5o0x6s0x0I9x9QXoyjwNlNBmPo',
+    appId: '1:93808411370:web:0eea72f8b0d30c03248d93',
+    messagingSenderId: '93808411370',
+    projectId: 'clareco-1f119',
+    authDomain: 'clareco-1f119.firebaseapp.com',
+    storageBucket: 'clareco-1f119.appspot.com',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCrqYVPE09DLmk5efLyMqIxZwE9Fco7lAg',
-    appId: '1:93808411370:android:eacab65407279ad6248d93',
+    appId: '1:93808411370:android:3ed000b0db71e3f1248d93',
     messagingSenderId: '93808411370',
     projectId: 'clareco-1f119',
     storageBucket: 'clareco-1f119.appspot.com',
@@ -56,7 +62,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDx1zSxWuW8449lmyzqaDFubxEV3_5mYyo',
-    appId: '1:93808411370:ios:0d7cce4dce335a61248d93',
+    appId: '1:93808411370:ios:fba3c1cfe821c6bc248d93',
     messagingSenderId: '93808411370',
     projectId: 'clareco-1f119',
     storageBucket: 'clareco-1f119.appspot.com',
@@ -67,7 +73,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDx1zSxWuW8449lmyzqaDFubxEV3_5mYyo',
-    appId: '1:93808411370:ios:0d7cce4dce335a61248d93',
+    appId: '1:93808411370:ios:fba3c1cfe821c6bc248d93',
     messagingSenderId: '93808411370',
     projectId: 'clareco-1f119',
     storageBucket: 'clareco-1f119.appspot.com',

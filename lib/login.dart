@@ -74,8 +74,12 @@ class _SignInScreenState extends State<SignInScreen> {
                       Provider.of<GoogleSignInProvider>(context, listen: false);
                   try {
                     dynamic result = await provider.googleLogin();
+                    print('////////////////////');
+                    print(result);
+                    print('///////////////////');
                     if (result == null) {
                     } else {
+                      // ignore: use_build_context_synchronously
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) => DialPad()));
                       // setState(() {});

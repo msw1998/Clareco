@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "clareco-1f119",
+    "staging": "clareco-1f119"
+  },
+  "targets": {},
+  "etags": {}
+}

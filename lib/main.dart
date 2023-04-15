@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_const_declarations, prefer_const_constructors
 
 import 'package:clareco/google_sign_in.dart';
+import 'package:clareco/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mailer/smtp_server/gmail.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
           ),
           scaffoldBackgroundColor: Colors.grey[700],
         ),
+        // home: const MyHomePage(number: '123'),
         home: const SplashScreen(),
       ),
     );
